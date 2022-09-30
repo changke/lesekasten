@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesekasten</title>
+  <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --gap05: 5px;
+      --gap: 10px;
+      --box-border-width: 20px;
+      --letter-card-height: 30px;
+      --row-height: 40px;
+    }
+    body {
+      padding: var(--gap05);
+      margin: 0;
+      background-color: #fff;
+      color: #000;
+    }
+    lk-container,
+    lk-board {
+      display: block;
+    }
+  </style>
+  <script type="module" src="wc/container/container.wc.js"></script>
+  <script type="module" src="wc/board/board.wc.js"></script>
+</head>
+
+<body>
+  <lk-container id="container">
+    <lk-board id="board"></lk-board>
+  </lk-container>
+</body>
+
+</html>
