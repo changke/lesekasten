@@ -6,6 +6,8 @@ export class Board extends LitElement {
   static styles = css`
     :host {
       contain: content;
+      --row-bg: #f5f5f5;
+      --input-cursor-color: #aaa;
     }
     .box {
       border: var(--box-border-width) solid #fc6;
@@ -16,7 +18,7 @@ export class Board extends LitElement {
       margin: 0 0 var(--gap05);
     }
     .row {
-      background-color: #f5f5f5;
+      background-color: var(--row-bg);
       height: var(--row-height);
       display: flex;
       align-items: center;
@@ -35,9 +37,19 @@ export class Board extends LitElement {
       padding: 0 var(--gap05);
       background-color: #fff;
       color: #000;
+      cursor: not-allowed;
     }
     .row span:nth-child(even) {
       color: #191970;
+    }
+    .row .cursor {
+      display: inline-block;
+      height: calc(var(--letter-card-height) - 10px);
+      width: 1px;
+      background-color: var(--input-cursor-color);
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--input-cursor-color) var(--row-bg);
     }
   `;
 
@@ -55,6 +67,7 @@ export class Board extends LitElement {
         ${this.rows.map((row, idx) => html`
           <div class="row" ?data-current=${this.currentRow === idx} id="row${idx}" @click=${this.setCurrentRow(idx)}>
             ${this.getRowHtml(idx)}
+            ${(this.currentRow === idx) ? html`<i class="cursor"></i>` : null}
           </div>
         `)}
       </div>
