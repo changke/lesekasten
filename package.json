@@ -1,7 +1,7 @@
 {
-  "name": "lit-setup",
-  "version": "2.0.0",
-  "description": "Minimal setup for building Web Components with Lit",
+  "name": "lesekasten",
+  "version": "1.0.0",
+  "description": "Web mimic of Lesekasten Grundschule 1. Klasse",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts src",
