@@ -13,21 +13,21 @@ export class Container extends LitElement {
       border: var(--box-border-width) solid #fc6;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 5px;
+      gap: var(--gap05);
+      padding: var(--gap05);
     }
     .row {
       display: flex;
       overflow-x: auto;
       gap: 1px;
-      background-color: #333;
+      background-color: #999;
     }
     .row span {
-      font-family: sans-serif;
+      font-family: 'ABeeZee', sans-serif;
       font-size: 24px;
       line-height: var(--letter-card-height);
       display: inline-block;
-      padding: 10px;
+      padding: var(--gap) var(--gap05);
       flex-grow: 1;
       text-align: center;
       cursor: pointer;

@@ -28,9 +28,9 @@ export class Board extends LitElement {
     .row[data-current] {
       outline: 2px dashed #999;
     }
-    .row span {
+    .row > span {
       display: inline-block;
-      font-family: sans-serif;
+      font-family: 'ABeeZee', sans-serif;
       font-size: 24px;
       line-height: var(--letter-card-height);
       height: var(--letter-card-height);
@@ -39,8 +39,8 @@ export class Board extends LitElement {
       color: #000;
       cursor: not-allowed;
     }
-    .row span:nth-child(even) {
-      color: #191970;
+    .row > span:nth-child(even) {
+      color: #33c;
     }
     .row .cursor {
       display: inline-block;
@@ -50,6 +50,15 @@ export class Board extends LitElement {
       border-width: 5px;
       border-style: solid;
       border-color: var(--input-cursor-color) var(--row-bg);
+    }
+    .row button {
+      border: 0;
+      background-color: #ffe4e1;
+      padding: 3px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   `;
 
@@ -67,10 +76,17 @@ export class Board extends LitElement {
         ${this.rows.map((row, idx) => html`
           <div class="row" ?data-current=${this.currentRow === idx} id="row${idx}" @click=${this.setCurrentRow(idx)}>
             ${this.getRowHtml(idx)}
-            ${(this.currentRow === idx) ? html`<i class="cursor"></i>` : null}
+            ${(this.currentRow === idx) ? this.getRowOpHtml(idx) : null}
           </div>
         `)}
       </div>
+    `;
+  }
+
+  getRowOpHtml(rowIdx: number) {
+    return html`
+      <i class="cursor"></i>
+      <button @click=${this.clearRow(rowIdx)}><img src="assets/backspace_black_24dp.svg" width="24" height="24" /></button>
     `;
   }
 
@@ -99,5 +115,13 @@ export class Board extends LitElement {
     const newRows = this.rows.slice();
     newRows[this.currentRow].push(letter); // add to the last pos.
     this.rows = newRows;
+  }
+
+  clearRow(rowIdx: number) {
+    return () => {
+      const newRows = this.rows.slice();
+      newRows[rowIdx] = []; // clear the row;
+      this.rows = newRows;
+    };
   }
 }
