@@ -22,7 +22,7 @@ export class Container extends LitElement {
       gap: 1px;
       background-color: #999;
     }
-    .row span {
+    .row button {
       font-family: 'ABeeZee', sans-serif;
       font-size: 24px;
       line-height: var(--letter-card-height);
@@ -32,23 +32,25 @@ export class Container extends LitElement {
       text-align: center;
       cursor: pointer;
       color: #333;
+      border: 0;
+      margin: 0;
     }
-    .row span:hover {
+    .row button:hover {
       color: #000;
     }
-    .row0 span {
+    .row0 button {
       background-color: #f0f8ff;
     }
-    .row1 span {
+    .row1 button {
       background-color: #ffe4b5;
     }
-    .row2 span {
+    .row2 button {
       background-color: #f0fff0;
     }
-    .row3 span {
+    .row3 button {
       background-color: #fffacd;
     }
-    .row4 span {
+    .row4 button {
       background-color: #ffe4e1;
     }
   `;
@@ -71,7 +73,9 @@ export class Container extends LitElement {
         ${this.letters.map((row, idx) => {
           return html`
             <div class="row row${idx}">
-              ${row.map(letter => html`<span @click=${this.sendLetter(letter)}>${letter}</span>`)}
+              ${row.map(letter => html`
+                <button type="button" @click=${this.sendLetter(letter)}>${letter}</button>
+              `)}
             </div>
           `;
         })}
@@ -81,7 +85,6 @@ export class Container extends LitElement {
 
   sendLetter(letter: string) {
     return () => {
-      console.log(letter);
       this.boards[0]?.addLetter(letter);
     };
   }

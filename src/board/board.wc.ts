@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit';
+import {html, css, LitElement, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
 @customElement('lk-board')
@@ -28,7 +28,7 @@ export class Board extends LitElement {
     .row[data-current] {
       outline: 2px dashed #999;
     }
-    .row > span {
+    .row .card {
       display: inline-block;
       font-family: 'ABeeZee', sans-serif;
       font-size: 24px;
@@ -37,9 +37,8 @@ export class Board extends LitElement {
       padding: 0 var(--gap05);
       background-color: #fff;
       color: #000;
-      cursor: not-allowed;
     }
-    .row > span:nth-child(even) {
+    .row .card:nth-child(even) {
       color: #33c;
     }
     .row .cursor {
@@ -50,6 +49,9 @@ export class Board extends LitElement {
       border-width: 5px;
       border-style: solid;
       border-color: var(--input-cursor-color) var(--row-bg);
+    }
+    .row .pusher {
+      flex: 1;
     }
     .row button {
       border: 0;
@@ -63,9 +65,9 @@ export class Board extends LitElement {
   `;
 
   @state() rows = [
-    ['M', 'i', 'm', 'i'],
-    ['B', 'i', 'b', 'u'],
     ['T', 'ü', 't', 'e'],
+    ['B', 'i', 'b', 'u'],
+    ['M', 'i', 'm', 'i'],
     ['M', 'a', 'u', 's']
   ];
   @state() currentRow = 0;
@@ -76,7 +78,7 @@ export class Board extends LitElement {
         ${this.rows.map((row, idx) => html`
           <div class="row" ?data-current=${this.currentRow === idx} id="row${idx}" @click=${this.setCurrentRow(idx)}>
             ${this.getRowHtml(idx)}
-            ${(this.currentRow === idx) ? this.getRowOpHtml(idx) : null}
+            ${(this.currentRow === idx) ? this.getRowOpHtml(idx) : nothing}
           </div>
         `)}
       </div>
@@ -86,14 +88,19 @@ export class Board extends LitElement {
   getRowOpHtml(rowIdx: number) {
     return html`
       <i class="cursor"></i>
-      <button @click=${this.clearRow(rowIdx)}><img src="assets/backspace_black_24dp.svg" width="24" height="24" /></button>
+      <span class="pusher"></span>
+      <button @click=${this.clearRow(rowIdx)}>
+        <img src="assets/backspace_black_24dp.svg" width="24" height="24" />
+      </button>
     `;
   }
 
   getRowHtml(rowIdx: number) {
     const letterArray = this.rows[rowIdx];
     if (Array.isArray(letterArray)) {
-      return letterArray.map((letter, idx) => html`<span @click=${this.removeLetter(rowIdx, idx)}>${letter}</span>`);
+      return letterArray.map((letter, idx) => html`
+        <span class="card" @click=${this.removeLetter(rowIdx, idx)}>${letter}</span>
+      `);
     }
   }
 

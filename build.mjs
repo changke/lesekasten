@@ -1,7 +1,7 @@
 import {deleteAsync} from 'del';
 import cpy from 'cpy';
-import { globby } from 'globby';
-import { build } from 'esbuild';
+import {globby} from 'globby';
+import {build} from 'esbuild';
 
 // delete dest
 const clean = () => deleteAsync('dest/*');
@@ -18,7 +18,8 @@ const bundle = async () => {
     bundle: true,
     format: 'esm',
     splitting: true,
-    outdir: 'dest/wc'
+    outdir: 'dest/wc',
+    minify: true
   });
 };
 
@@ -26,4 +27,9 @@ const bundle = async () => {
 const copyAndBundle = () => Promise.all([copy(), bundle()]);
 
 // go
-clean().then(copyAndBundle);
+console.time('build');
+clean()
+  .then(copyAndBundle)
+  .then(() => {
+    console.timeEnd('build');
+  });
